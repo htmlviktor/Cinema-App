@@ -1,14 +1,21 @@
 import makeFilter from '../src/make-filter.js'
 import makeCard from '../src/make-card.js'
+import {cardsArray} from '../src/data.js'
 
 const random = (min = 1, max = 20) => Math.round(Math.random() * (max - min) + min);
 
-const renderTasks = (dist) => {
-  const tasks = new Array(random(1, 8))
-    .fill()
-    .map(makeCard);
-  dist.insertAdjacentHTML(`beforeend`, tasks.join(``));
+const renderTasks = (dist, max) => {
+ const cards = cardsArray.map(function(index, elem) {
+    return makeCard(index)
+}).slice(0, max).join(``);
+
+ dist.insertAdjacentHTML('beforeend', cards)
 };
+
+
+
+
+
 
 
 
@@ -20,19 +27,15 @@ filters.insertAdjacentHTML('afterbegin', makeFilter('Watchlist', random(), ));
 filters.insertAdjacentHTML('afterbegin', makeFilter('All movies', random(), false));
 
 const boardFilms = document.querySelector('.films-list .films-list__container');
+renderTasks(boardFilms, 7);
 
-for (let i = 0; i < 7; i++) {
-  boardFilms.insertAdjacentHTML('beforeend', makeCard());
-}
 
 const boardFilmsExtra = document.querySelectorAll('.films-list--extra .films-list__container');
 boardFilmsExtra.forEach( (element, index) => {
-  console.log(element)
-  for (var i = 0; i < 2; i++) {
-      element.insertAdjacentHTML('beforeend', makeCard());
-     }
-
+  renderTasks(element, 2)
 });
+
+
 
 filters.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('main-navigation__item'))  {
@@ -40,5 +43,8 @@ filters.addEventListener('click', (evt) => {
     renderTasks(boardFilms)
   }
 });
+
+
+
 
 
