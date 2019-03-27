@@ -1,13 +1,13 @@
-export default () => `<article class="film-card">
-          <h3 class="film-card__title">The Assassination Of Jessie James By The Coward Robert Ford</h3>
-          <p class="film-card__rating">9.8</p>
+export default (data) => `<article class="film-card">
+          <h3 class="film-card__title">${data.title}</h3>
+          <p class="film-card__rating">${data.rating}</p>
           <p class="film-card__info">
-            <span class="film-card__year">2018</span>
-            <span class="film-card__duration">1h&nbsp;13m</span>
-            <span class="film-card__genre">Comedy</span>
+            <span class="film-card__year">${data.year}</span>
+            <span class="film-card__duration">${data.duration}</span>
+            <span class="film-card__genre">${data.genre}</span>
           </p>
-          <img src="./images/posters/three-friends.jpg" alt="" class="film-card__poster">
-          <p class="film-card__description">Here will description for this film.</p>
+          <img src="${data.poster}" alt="" class="film-card__poster">
+          <p class="film-card__description">${data.description}</p>
           <button class="film-card__comments">13 comments</button>
 
           <form class="film-card__controls">
