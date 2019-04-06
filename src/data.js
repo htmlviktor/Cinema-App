@@ -1,5 +1,5 @@
 const posters = ['accused', 'blackmail', 'blue-blazes', 'fuga-da-new-york', 'moonrise', 'three-friends'];
-const card = {
+const data = {
   poster: `/images/posters/`,
   title: new Set([
       `Поворот не туда`,
@@ -48,7 +48,7 @@ const createCard = (data, qty) => {
       rating: `${Math.floor(Math.random()*9)}.${Math.floor(Math.random()*9)}`,
       year: [...data.year][Math.floor(Math.random() * 5)],
       duration: `${Math.floor(Math.random() * 3)}h ${Math.floor(Math.random() * 60)}m`,
-      genre: [...data.genre][Math.floor(Math.random() * [...data.genre].length)],
+      genre: [...data.genre].slice(0, Math.floor(Math.random() * [...data.genre].length)),
       description: data.description
     }
     cardsAll.push(obj)
@@ -58,10 +58,9 @@ const createCard = (data, qty) => {
 
 
 
-const cardsArray = createCard(card, 7);
+const cardsArray = createCard(data, 7);
 
 
 
-
-export {card, cardsArray};
+export {data, cardsArray};
 
