@@ -1,7 +1,7 @@
-import makeFilter from '../src/make-filter.js'
-import {data, cardsArray} from '../src/data.js'
-import {Card} from '../src/card.js'
-import {CardPopup} from '../src/card-popup.js'
+import makeFilter from './make-filter'
+import {cardsArray} from './data'
+import {Card} from './card'
+import {CardPopup} from './card-popup'
 
 const random = (min = 1, max = 20) => Math.round(Math.random() * (max - min) + min);
 
@@ -14,11 +14,11 @@ const cardPopup = new CardPopup(cardsArray[0]);
 cardsContainer.appendChild(cardComponent.render());
 
 
-cardComponent.onClick = () => {
+cardComponent.onAction = () => {
   document.body.appendChild(cardPopup.render());
 }
 
-cardPopup.onClose = () => {
+cardPopup.onAction = () => {
   cardPopup._element.remove();
 }
 

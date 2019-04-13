@@ -1,5 +1,7 @@
-class Card {
+import { Component } from "../src/component";
+class Card extends Component {
   constructor(data) {
+    super();
     this._poster = data.poster;
     this._title = data.title;
     this._year = data.year;
@@ -8,17 +10,12 @@ class Card {
     this._genre = data.genre;
     this._description = data.description;
 
-    this._element = null;
-    this._onClick = null;
+    this._onPopupButtonClick = this._onPopupButtonClick.bind(this);
   }
 
   _onPopupButtonClick() {
-    typeof this._onClick === 'function' && this._onClick();
+    typeof this._onAction === 'function' && this._onAction();
   }
-
-  set onClick(fn) {
-    this._onClick = fn;
-}
 
   get template() {
     return `<article class="film-card">
@@ -43,19 +40,7 @@ class Card {
 
    bind() {
     this._element.querySelector('.film-card__comments')
-        .addEventListener('click', this._onPopupButtonClick.bind(this));
-  }
-
-  createNode(template) {
-    const element = document.createElement('div');
-    element.innerHTML = template;
-    return element.firstChild
-  }
-  render(container) {
-    this._element = this.createNode(this.template);
-    this.bind();
-    return this._element;
-
+        .addEventListener('click', this._onPopupButtonClick);
   }
 
 
