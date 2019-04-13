@@ -1,5 +1,8 @@
-class CardPopup {
+import { Component } from "./component";
+
+class CardPopup extends Component {
   constructor(data) {
+    super();
     this._poster = data.poster;
     this._title = data.title;
     this._year = data.year;
@@ -8,17 +11,12 @@ class CardPopup {
     this._genre = data.genre;
     this._description = data.description;
 
-    this._element = null;
-    this._onClose = null;
+    this._onCloseButtonClick = this._onCloseButtonClick.bind(this);
+
   }
 
   _onCloseButtonClick() {
-    console.log(this._onClose)
-    typeof this._onClose === 'function' && this._onClose();
-  }
-
-  set onClose(fn) {
-    this._onClose = fn;
+    typeof this._onAction === 'function' && this._onAction();
   }
 
   get template() {
@@ -187,23 +185,10 @@ class CardPopup {
 </section>
 `
   }
-  createNode(template) {
-    const element = document.createElement('div');
-    element.innerHTML = template;
-    return element.firstChild;
-  }
-
   bind() {
     this._element.querySelector('.film-details__close-btn')
-        .addEventListener('click', this._onCloseButtonClick.bind(this));
+        .addEventListener('click', this._onCloseButtonClick);
   }
-
-  render(container) {
-    this._element = this.createNode(this.template);
-    this.bind();
-    return this._element
-  }
-
 }
 
 
