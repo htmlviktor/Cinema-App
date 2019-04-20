@@ -17,7 +17,7 @@ class CardPopup extends Component {
 
     this._onCloseButtonClick = this._onCloseButtonClick.bind(this);
     this._onCommentAdd = this._onCommentAdd.bind(this);
-    
+    this._onRatingAdd = this._onRatingAdd.bind(this);
   }
 
   _onCloseButtonClick() {
@@ -36,6 +36,9 @@ class CardPopup extends Component {
       this._comments.push(obj);
       this.commentUpdate();
     }
+  }
+  _onRatingAdd(evt) {
+
   }
 
   commentUpdate() {
@@ -62,9 +65,7 @@ class CardPopup extends Component {
     }).join(``);
   }
 
-  _onRatingAdd() {
-
-  }
+  
 
   mapCreator(data) {
     const entry = {
@@ -89,7 +90,7 @@ class CardPopup extends Component {
     </div>
     <div class="film-details__info-wrap">
       <div class="film-details__poster">
-        <img class="film-details__poster-img" src="images/posters/blackmail.jpg" alt="incredables-2">
+        <img class="film-details__poster-img" src="${this._poster}" alt="incredables-2">
 
         <p class="film-details__age">18+</p>
       </div>
@@ -103,7 +104,7 @@ class CardPopup extends Component {
 
           <div class="film-details__rating">
             <p class="film-details__total-rating">${this._rating}</p>
-            <p class="film-details__user-rating">Your rate ${this._score}</p>
+            <p class="film-details__user-rating">Your rate ${this._score ? this._score : '' }</p>
           </div>
         </div>
 
@@ -211,7 +212,7 @@ class CardPopup extends Component {
 
       <div class="film-details__user-score">
         <div class="film-details__user-rating-poster">
-          <img src="images/posters/blackmail.jpg" alt="film-poster" class="film-details__user-rating-img">
+          <img src="${this._poster}" alt="film-poster" class="film-details__user-rating-img">
         </div>
 
         <section class="film-details__user-rating-inner">
@@ -260,6 +261,8 @@ class CardPopup extends Component {
       .addEventListener('click', this._onCloseButtonClick);
     this._element.querySelector('.film-details__comment-input')
       .addEventListener('keyup', this._onCommentAdd)
+    // this._element.querySelector('.film-details__user-rating-score')
+    //   .addEventListener('change', this._onRatingAdd)
   }
 
   unbind() {
