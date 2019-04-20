@@ -10,6 +10,7 @@ class Card extends Component {
     this._genre = data.genre;
     this._description = data.description;
 
+    this._comments = data.comments;
     this._onPopupButtonClick = this._onPopupButtonClick.bind(this);
   }
 
@@ -28,7 +29,7 @@ class Card extends Component {
           </p>
           <img src="${this._poster}" alt="" class="film-card__poster">
           <p class="film-card__description">${this._description}</p>
-          <button class="film-card__comments">13 comments</button>
+          <button class="film-card__comments">${this._comments.length} comments</button>
 
           <form class="film-card__controls">
             <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist"><!--Add to watchlist--> WL</button>
@@ -42,6 +43,7 @@ class Card extends Component {
     this._element.querySelector('.film-card__comments')
         .addEventListener('click', this._onPopupButtonClick);
   }
+  
 
 
 }

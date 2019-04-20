@@ -8,19 +8,37 @@ const random = (min = 1, max = 20) => Math.round(Math.random() * (max - min) + m
 
 const cardsContainer = document.querySelector('.films-list__container');
 
-const cardComponent = new Card(cardsArray[0]);
-const cardPopup = new CardPopup(cardsArray[0]);
+cardsArray.forEach((mock) => {
+  const cardComponent = new Card(mock);
+  const cardPopup = new CardPopup(mock);
+  cardsContainer.appendChild(cardComponent.render());
 
-cardsContainer.appendChild(cardComponent.render());
+  cardComponent.onAction = () => {
+    document.body.appendChild(cardPopup.render());
+  }
+
+  cardPopup.onAction = (data, comments) => {
+    cardsArray[0].comments = comments;
+    cardsArray[0].watched = data.watched;
+    cardsArray[0]['comment-emoji'] = data['comment-emoji'];
+    cardsArray[0].score = data.score;
+    
+    cardComponent._element.remove();
+    cardsContainer.appendChild(cardComponent.render())
+    cardPopup._element.remove();
+    cardPopup.unbind();
+  }
+})
 
 
-cardComponent.onAction = () => {
-  document.body.appendChild(cardPopup.render());
-}
 
-cardPopup.onAction = () => {
-  cardPopup._element.remove();
-}
+
+
+
+
+
+
+
 
 
 
