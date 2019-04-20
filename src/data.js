@@ -13,7 +13,7 @@ const data = {
       `Останься навсегда`,
       `История любви`,
     ]),
-  // rating: ``,
+  rating: null,
   year: new Set([
       `2018`,
       `2017`,

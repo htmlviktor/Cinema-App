@@ -18,6 +18,27 @@ class CardPopup extends Component {
   _onCloseButtonClick() {
     typeof this._onAction === 'function' && this._onAction();
   }
+  _onCommentAdd() {
+    console.log()
+  }
+
+  _onRatingAdd() {}
+
+  mapCreator(data) {
+    const entry = {
+      watched: '',
+      'comment-emoji': '',
+      comment: '',
+      score: ''
+    }
+    const formData = new FormData(this._element.querySelector('.film-details__inner'));
+    for (const it of formData.entries()) {
+      console.log(it)
+      const [key, value] = it;
+      entry[key] = value;
+    }
+    return entry
+  }
 
   get template() {
     return `<section class="film-details">
@@ -187,7 +208,9 @@ class CardPopup extends Component {
   }
   bind() {
     this._element.querySelector('.film-details__close-btn')
-        .addEventListener('click', this._onCloseButtonClick);
+        .addEventListener('click', this._onCloseButtonClick);     
+    this._element.querySelector('.film-details__inner')
+        .addEventListener('change', this.mapCreator.bind(this))
   }
 }
 
