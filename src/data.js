@@ -33,7 +33,14 @@ const data = {
       `Боевик`,
     ]),
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Cras aliquet varius magna, non porta ligula feugiat eget.`
+                Cras aliquet varius magna, non porta ligula feugiat eget.`,
+  comments: [
+    {
+      author: '',
+      date: '',
+      text: ''
+    }
+  ]
 };
 
 
@@ -49,7 +56,14 @@ const createCard = (data, qty) => {
       year: [...data.year][Math.floor(Math.random() * 5)],
       duration: `${Math.floor(Math.random() * 3)}h ${Math.floor(Math.random() * 60)}m`,
       genre: [...data.genre].slice(0, Math.floor(Math.random() * [...data.genre].length)),
-      description: data.description
+      description: data.description,
+      comments: [
+        {
+          author: 'Viktor',
+          date: '20 April',
+          text: 'Good cinema'
+        }
+      ]
     }
     cardsAll.push(obj)
   }

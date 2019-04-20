@@ -10,19 +10,61 @@ class CardPopup extends Component {
     this._duration = data.duration;
     this._genre = data.genre;
     this._description = data.description;
+    //Comments
+    this._comments = data.comments;
+    //Score
+    this._score = data.score;
 
     this._onCloseButtonClick = this._onCloseButtonClick.bind(this);
-
+    this._onCommentAdd = this._onCommentAdd.bind(this);
+    
   }
 
   _onCloseButtonClick() {
-    typeof this._onAction === 'function' && this._onAction();
+    const formData = new FormData(this._element.querySelector('.film-details__inner'));
+    const newData = this.mapCreator(formData);
+    this._score = newData.score;
+    typeof this._onAction === 'function' && this._onAction(newData, this._comments);
   }
-  _onCommentAdd() {
-    console.log()
+  _onCommentAdd(evt) {
+    if (evt.keyCode === 13) {
+      const obj = {
+        author: 'Viktor',
+        date: '20 April',
+        text: document.querySelector('.film-details__comment-input').value
+      }
+      this._comments.push(obj);
+      this.commentUpdate();
+    }
   }
 
-  _onRatingAdd() {}
+  commentUpdate() {
+    document.querySelector('.film-details__comments-list')
+      .innerHTML = '';
+    document.querySelector('.film-details__comments-list')
+      .insertAdjacentHTML('afterbegin', this.renderComments());
+    document.querySelector('.film-details__comment-input').value = ''
+  }
+  renderComments() {
+    return this._comments.map((it) => {
+      return `
+      <li class="film-details__comment">
+    <span class="film-details__comment-emoji">😴</span>
+      <div>
+      <p class="film-details__comment-text">${it.text}</p>
+      <p class="film-details__comment-info">
+        <span class="film-details__comment-author">${it.author}</span>
+        <span class="film-details__comment-day">${it.date}</span>
+      </p>
+    </div>
+    </li>
+    `
+    }).join(``);
+  }
+
+  _onRatingAdd() {
+
+  }
 
   mapCreator(data) {
     const entry = {
@@ -31,12 +73,11 @@ class CardPopup extends Component {
       comment: '',
       score: ''
     }
-    const formData = new FormData(this._element.querySelector('.film-details__inner'));
-    for (const it of formData.entries()) {
-      console.log(it)
+    for (const it of data.entries()) {
       const [key, value] = it;
       entry[key] = value;
     }
+
     return entry
   }
 
@@ -62,7 +103,7 @@ class CardPopup extends Component {
 
           <div class="film-details__rating">
             <p class="film-details__total-rating">${this._rating}</p>
-            <p class="film-details__user-rating">Your rate 8</p>
+            <p class="film-details__user-rating">Your rate ${this._score}</p>
           </div>
         </div>
 
@@ -117,19 +158,27 @@ class CardPopup extends Component {
     </section>
 
     <section class="film-details__comments-wrap">
-      <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">1</span></h3>
+      <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${this._comments.length}</span></h3>
 
       <ul class="film-details__comments-list">
-        <li class="film-details__comment">
+        
+          ${this._comments.map((it) => {
+
+      return `
+            <li class="film-details__comment">
           <span class="film-details__comment-emoji">😴</span>
-          <div>
-            <p class="film-details__comment-text">So long-long story, boring!</p>
+            <div>
+            <p class="film-details__comment-text">${it.text}</p>
             <p class="film-details__comment-info">
-              <span class="film-details__comment-author">Tim Macoveev</span>
-              <span class="film-details__comment-day">3 days ago</span>
+              <span class="film-details__comment-author">${it.author}</span>
+              <span class="film-details__comment-day">${it.date}</span>
             </p>
           </div>
-        </li>
+          </li>
+          `
+    }).join('')}
+          
+        
       </ul>
 
       <div class="film-details__new-comment">
@@ -208,11 +257,18 @@ class CardPopup extends Component {
   }
   bind() {
     this._element.querySelector('.film-details__close-btn')
-        .addEventListener('click', this._onCloseButtonClick);     
-    this._element.querySelector('.film-details__inner')
-        .addEventListener('change', this.mapCreator.bind(this))
+      .addEventListener('click', this._onCloseButtonClick);
+    this._element.querySelector('.film-details__comment-input')
+      .addEventListener('keyup', this._onCommentAdd)
   }
+
+  unbind() {
+    this._element = null
+  }
+  
+
+
 }
 
 
-export {CardPopup}
+export { CardPopup }

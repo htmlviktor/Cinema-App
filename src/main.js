@@ -18,8 +18,21 @@ cardComponent.onAction = () => {
   document.body.appendChild(cardPopup.render());
 }
 
-cardPopup.onAction = () => {
+cardPopup.onAction = (data, comments) => {
+  cardsArray[0].comments = comments;
+  cardsArray[0].watched = data.watched;
+  cardsArray[0]['comment-emoji'] = data['comment-emoji'];
+  cardsArray[0].score = data.score;
+  
+  
+  cardComponent._element.remove();
+  cardsContainer.appendChild(cardComponent.render())
+
+  
   cardPopup._element.remove();
+  console.log(cardPopup._element)
+  cardPopup.unbind();
+  console.log(cardPopup._element)
 }
 
 
